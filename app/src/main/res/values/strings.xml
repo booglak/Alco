@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Alco</string>
+    <string name="tvStartApp">Start</string>
+    <string name="tvExitApp">Exit</string>
 </resources>
