@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
@@ -19,13 +22,29 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button btnAutoBuhich;
     SoundPool sp;
     int soundId;
+    List<Integer> sounds;
     Handler handler;
+    Random random;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        sounds = new ArrayList<>();
+        sounds.add(R.raw.one_sound);
+        sounds.add(R.raw.two_sound);
+        sounds.add(R.raw.three_sound);
+        sounds.add(R.raw.four_sound);
+        sounds.add(R.raw.five_sound);
+        sounds.add(R.raw.six_sound);
+        sounds.add(R.raw.seven_sound);
+        sounds.add(R.raw.eight_sound);
+        sounds.add(R.raw.nine_sound);
+        sounds.add(R.raw.ten_sound);
+        sounds.add(R.raw.eleven_sound);
+        sounds.add(R.raw.twelve_sound);
 
         SoundPool.OnLoadCompleteListener onLoadCompleteListener = new SoundPool.OnLoadCompleteListener() {
             @Override
@@ -37,6 +56,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         sp.setOnLoadCompleteListener(onLoadCompleteListener);
 
+        //soundId = sp.load(this, sounds.get(random.nextInt(sounds.size())), 1);
         soundId = sp.load(this, R.raw.one_sound, 1);
 
         iwShsh = (ImageView)findViewById(R.id.imShsh);
@@ -52,6 +72,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void Buhich (){
+
+        random = new Random();
+
 
         iwShsh.setImageResource(R.drawable.second_image);
         sp.play(soundId, 1, 1, 0, 0, 1);
@@ -75,6 +98,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnGoBuhich:
+                System.out.println("");
                 Buhich();
                 break;
         }
