@@ -2,4 +2,6 @@
     <string name="app_name">Alco</string>
     <string name="tvStartApp">Start</string>
     <string name="tvExitApp">Exit</string>
+    <string name="btnGoBuhich">Давай бухнем!</string>
+    <string name="btnAutoBuhich">АвтоБух!</string>
 </resources>
