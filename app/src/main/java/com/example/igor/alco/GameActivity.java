@@ -62,7 +62,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     public void run() {
                         iwShsh.setImageResource(R.drawable.first_image);
                     }
-                }, 5000);
+                }, 2000);
             }
         }, 5000);
     }
