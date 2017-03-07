@@ -1,14 +1,20 @@
 package com.example.igor.alco;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +30,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     List<Integer> sounds;
     Handler handler;
     Random random;
+    AlertDialog.Builder buhichTime;
 
 
     @Override
@@ -65,14 +72,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnGoBuhich.setOnClickListener(this);
         btnAutoBuhich.setOnClickListener(this);
 
+        buhichTime = new AlertDialog.Builder(this);
     }
 
 
     public void Buhich (){
 
         random = new Random();
-        System.out.println(sounds.get(random.nextInt(sounds.size())));
-
         iwShsh.setImageResource(R.drawable.second_image);
         sp.play(sounds.get(random.nextInt(sounds.size())), 1, 1, 0, 0, 1);
         handler.postDelayed(new Runnable() {
@@ -87,7 +93,39 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }, 5000);
     }
 
+    public void AutoBuhichDialog(){
+
+        buhichTime.setTitle("Как часто ты можешь пить, бро?");
+        buhichTime.setMessage("Укажи время в минутах:");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        buhichTime.setView(input);
+
+        buhichTime.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                try {
+                    int value = Integer.parseInt(input.getText().toString());
+                }
+                catch (NumberFormatException e){
+                    Toast toast = Toast.makeText(getApplicationContext(), "Ты забыл сказать через сколько бухаем снова!", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                // Do something with value!
+            }
+        });
+
+        buhichTime.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.cancel();
+            }
+        });
+
+        buhichTime.show();
+    }
+
     public void AutoBuhich(){
+        AutoBuhichDialog();
 
     }
 
@@ -95,8 +133,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnGoBuhich:
-                System.out.println("");
                 Buhich();
+                break;
+            case R.id.btnAutoBuhich:
+                AutoBuhich();
                 break;
         }
     }
