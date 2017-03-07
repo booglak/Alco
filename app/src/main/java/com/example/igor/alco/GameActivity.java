@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
@@ -31,6 +34,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Handler handler;
     Random random;
     AlertDialog.Builder buhichTime;
+    Timer mTimer;
+    TimerTask mTimerTask;
 
 
     @Override
@@ -97,6 +102,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         buhichTime.setTitle("Как часто ты можешь пить, бро?");
         buhichTime.setMessage("Укажи время в минутах:");
+        buhichTime.setCancelable(true);
 
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -105,13 +111,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         buhichTime.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 try {
-                    int value = Integer.parseInt(input.getText().toString());
+                    int val = Integer.parseInt(input.getText().toString());
+                    AutoBuhich(val);
                 }
                 catch (NumberFormatException e){
                     Toast toast = Toast.makeText(getApplicationContext(), "Ты забыл сказать через сколько бухаем снова!", Toast.LENGTH_SHORT);
                     toast.show();
                 }
-                // Do something with value!
             }
         });
 
@@ -124,8 +130,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         buhichTime.show();
     }
 
-    public void AutoBuhich(){
-        AutoBuhichDialog();
+    public class MyTimerTask extends TimerTask{
+
+        @Override
+        public void run() {
+            Buhich();
+        }
+    }
+
+    public void AutoBuhich(int val){
+        //if(mTimer != null){
+        //    mTimer.cancel();
+        //}
+
+        mTimer = new Timer();
+        mTimerTask = new MyTimerTask();
+        mTimer.schedule(mTimerTask, 0, val*1000);
 
     }
 
@@ -136,8 +156,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Buhich();
                 break;
             case R.id.btnAutoBuhich:
-                AutoBuhich();
+                AutoBuhichDialog();
                 break;
         }
     }
+
+
 }
