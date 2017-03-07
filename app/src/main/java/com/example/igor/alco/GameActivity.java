@@ -21,7 +21,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button btnGoBuhich;
     Button btnAutoBuhich;
     SoundPool sp;
-    int soundId;
     List<Integer> sounds;
     Handler handler;
     Random random;
@@ -31,20 +30,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
-        sounds = new ArrayList<>();
-        sounds.add(R.raw.one_sound);
-        sounds.add(R.raw.two_sound);
-        sounds.add(R.raw.three_sound);
-        sounds.add(R.raw.four_sound);
-        sounds.add(R.raw.five_sound);
-        sounds.add(R.raw.six_sound);
-        sounds.add(R.raw.seven_sound);
-        sounds.add(R.raw.eight_sound);
-        sounds.add(R.raw.nine_sound);
-        sounds.add(R.raw.ten_sound);
-        sounds.add(R.raw.eleven_sound);
-        sounds.add(R.raw.twelve_sound);
 
         SoundPool.OnLoadCompleteListener onLoadCompleteListener = new SoundPool.OnLoadCompleteListener() {
             @Override
@@ -56,8 +41,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         sp.setOnLoadCompleteListener(onLoadCompleteListener);
 
-        //soundId = sp.load(this, sounds.get(random.nextInt(sounds.size())), 1);
-        soundId = sp.load(this, R.raw.one_sound, 1);
+        sounds = new ArrayList<>();
+        sounds.add(sp.load(this, R.raw.one_sound, 1));
+        sounds.add(sp.load(this, R.raw.two_sound, 1));
+        sounds.add(sp.load(this, R.raw.three_sound, 1));
+        sounds.add(sp.load(this, R.raw.four_sound, 1));
+        sounds.add(sp.load(this, R.raw.five_sound, 1));
+        sounds.add(sp.load(this, R.raw.six_sound, 1));
+        sounds.add(sp.load(this, R.raw.seven_sound, 1));
+        sounds.add(sp.load(this, R.raw.eight_sound, 1));
+        sounds.add(sp.load(this, R.raw.nine_sound, 1));
+        sounds.add(sp.load(this, R.raw.ten_sound, 1));
+        sounds.add(sp.load(this, R.raw.eleven_sound, 1));
+        sounds.add(sp.load(this, R.raw.twelve_sound, 1));
+
 
         iwShsh = (ImageView)findViewById(R.id.imShsh);
         btnGoBuhich = (Button)findViewById(R.id.btnGoBuhich);
@@ -74,10 +71,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void Buhich (){
 
         random = new Random();
-
+        System.out.println(sounds.get(random.nextInt(sounds.size())));
 
         iwShsh.setImageResource(R.drawable.second_image);
-        sp.play(soundId, 1, 1, 0, 0, 1);
+        sp.play(sounds.get(random.nextInt(sounds.size())), 1, 1, 0, 0, 1);
         handler.postDelayed(new Runnable() {
             public void run() {
                 iwShsh.setImageResource(R.drawable.third_image);
