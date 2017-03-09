@@ -2,7 +2,6 @@ package com.example.igor.alco;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
@@ -10,7 +9,6 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
