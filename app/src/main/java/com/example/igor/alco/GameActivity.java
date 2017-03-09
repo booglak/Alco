@@ -2,12 +2,15 @@ package com.example.igor.alco;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -127,7 +130,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void AutoBuhich(final int val){
 
             //System.out.println("AutoBuhich START");
-
             try {
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -153,5 +155,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+    @Override
+    public void onBackPressed (){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAndRemoveTask ();
+        }
+        else {
+            System.exit(0);
+        }
+
+
+    }
+
+
 }
 

@@ -44,4 +44,9 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
+
+    @Override
+    public void onBackPressed(){
+        finish();
+    }
 }
