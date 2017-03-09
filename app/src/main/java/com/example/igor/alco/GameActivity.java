@@ -1,12 +1,9 @@
 package com.example.igor.alco;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,9 +17,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -34,8 +28,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Handler handler;
     Random random;
     AlertDialog.Builder buhichTime;
-    Timer mTimer;
-    TimerTask mTimerTask;
 
 
     @Override
@@ -78,7 +70,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnAutoBuhich.setOnClickListener(this);
 
         buhichTime = new AlertDialog.Builder(this);
+
     }
+
 
 
     public void Buhich (){
@@ -130,23 +124,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         buhichTime.show();
     }
 
-    public class MyTimerTask extends TimerTask{
+    public void AutoBuhich(final int val){
 
-        @Override
-        public void run() {
-            Buhich();
-        }
-    }
+            //System.out.println("AutoBuhich START");
 
-    public void AutoBuhich(int val){
-        //if(mTimer != null){
-        //    mTimer.cancel();
-        //}
-
-        mTimer = new Timer();
-        mTimerTask = new MyTimerTask();
-        mTimer.schedule(mTimerTask, 0, val*1000);
-
+            try {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Your process to do
+                        Buhich();
+                        AutoBuhich(val);
+                    }
+                }, val * 1000*60);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
     }
 
     @Override
@@ -160,6 +153,5 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-
-
 }
+
