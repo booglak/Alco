@@ -1,7 +1,9 @@
 package com.example.igor.alco;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
@@ -43,8 +45,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
 
-        sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        sp.setOnLoadCompleteListener(onLoadCompleteListener);
+        //sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        //sp.setOnLoadCompleteListener(onLoadCompleteListener);
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            // Для устройств до Android 5
+            createOldSoundPool();
+        } else {
+            // Для новых устройств
+            createNewSoundPool();
+        }
 
         sounds = new ArrayList<>();
         sounds.add(sp.load(this, R.raw.one_sound, 1));
@@ -61,6 +70,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         sounds.add(sp.load(this, R.raw.twelve_sound, 1));
 
 
+
         iwShsh = (ImageView)findViewById(R.id.imShsh);
         btnGoBuhich = (Button)findViewById(R.id.btnGoBuhich);
         btnAutoBuhich = (Button)findViewById(R.id.btnAutoBuhich);
@@ -74,6 +84,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void createNewSoundPool() {
+        AudioAttributes attributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+        sp = new SoundPool.Builder()
+                .setAudioAttributes(attributes)
+                .build();
+    }
+
+    @SuppressWarnings("deprecation")
+    private void createOldSoundPool() {
+        sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+    }
+
 
 
     public void Buhich (){
@@ -81,6 +107,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         random = new Random();
         iwShsh.setImageResource(R.drawable.second_image);
         sp.play(sounds.get(random.nextInt(sounds.size())), 1, 1, 0, 0, 1);
+
+
+
         handler.postDelayed(new Runnable() {
             public void run() {
                 iwShsh.setImageResource(R.drawable.third_image);
@@ -156,13 +185,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed (){
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            finishAndRemoveTask ();
-        }
-        else {
-            System.exit(0);
-        }
-
+        System.exit(0);
 
     }
 
