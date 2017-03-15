@@ -187,6 +187,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public void onPause(){
+        System.exit(0);
+    }
+
 
 }
 
