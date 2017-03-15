@@ -45,8 +45,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
 
-        //sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        //sp.setOnLoadCompleteListener(onLoadCompleteListener);
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             // Для устройств до Android 5
             createOldSoundPool();
@@ -106,6 +104,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         random = new Random();
         iwShsh.setImageResource(R.drawable.second_image);
+        btnGoBuhich.setEnabled(false);
         sp.play(sounds.get(random.nextInt(sounds.size())), 1, 1, 0, 0, 1);
 
 
@@ -116,6 +115,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 handler.postDelayed(new Runnable() {
                     public void run() {
                         iwShsh.setImageResource(R.drawable.first_image);
+                        btnGoBuhich.setEnabled(true);
                     }
                 }, 2000);
             }
@@ -156,12 +156,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void AutoBuhich(final int val){
 
-            //System.out.println("AutoBuhich START");
             try {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        //Your process to do
                         Buhich();
                         AutoBuhich(val);
                     }
